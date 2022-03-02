@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set("Asiz/Taipei");
+date_default_timezone_set("Asia/Taipei");
 session_start();
 
 class DB
@@ -25,7 +25,7 @@ class DB
                     foreach ($arg[0] as $key => $value) {
                         $tmp[] = "`$key`='$value'";
                     }
-                    $sql .= "WHERE" . implode("AND", $tmp);
+                    $sql .= " WHERE " . implode("AND", $tmp);
                 } else {
                     $sql .= $arg[0];
                 }
@@ -35,7 +35,7 @@ class DB
                 foreach ($arg[0] as $key => $value) {
                     $tmp = "`$key`='$value'";
                 }
-                $sql .= "WHERE" . implode(" AND ", $tmp) . " " . $arg[1];
+                $sql .= " WHERE " . implode(" AND ", $tmp) . " " . $arg[1];
                 break;
         }
 
@@ -53,7 +53,7 @@ class DB
                     foreach ($arg[0] as $key => $value) {
                         $tmp[] = "`$key`='$value'";
                     }
-                    $sql .= "WHERE" . implode("AND", $tmp);
+                    $sql .= " WHERE " . implode("AND", $tmp);
                 } else {
                     $sql .= $arg[0];
                 }
@@ -61,9 +61,9 @@ class DB
                 break;
             case 2:
                 foreach ($arg[0] as $key => $value) {
-                    $tmp = "`$key`='$value'";
+                    $tmp[] = "`$key`='$value'";
                 }
-                $sql .= "WHERE" . implode("AND", $tmp) . " " . $arg[1];
+                $sql .= " WHERE " . implode("AND", $tmp) . " " . $arg[1];
                 break;
         }
         //return的fetchall改成fetchColumn()
@@ -82,7 +82,7 @@ class DB
             foreach ($id as $key => $value) {
                 $tmp[] = "`$key`='$value'";
             }
-            $sql .= implode("AND", $tmp);
+            $sql .= implode(" AND ", $tmp);
         } else {
             $sql .= "`id`='$id'";
         }
@@ -118,7 +118,7 @@ class DB
             foreach ($array as $key => $value) {
                 $tmp[] = "`$key`='$value'";
             }
-            $sql="UPDATE $this->table SET" . implode(",", $tmp) ."WHERE `id`='{$array['id']}'";
+            $sql="UPDATE $this->table SET" . implode(",", $tmp) ." WHERE `id`='{$array['id']}'";
         }else{
             $sql="INSERT INTO $this->table (`" . implode("`,`",array_keys($array)). "`)VALUES('" . implode("','",$array). "')";
 
@@ -136,7 +136,7 @@ class DB
 function dd($array)
 {
     echo "<pre>";
-    echo print_r($array);
+    print_r($array);
     echo "</pre>";
 }
 
@@ -150,4 +150,30 @@ $Que = new DB('que');
 $Log = new DB('log');
 $User = new DB('user');
 $News = new DB('news');
-$View = new DB('View');
+$View = new DB('view');
+
+
+// 先判斷在view資料表裡面有沒有(有沒有這件事我們都是用math來算)
+if(isset($_SESSION['view'])){
+    // 請去找有沒有今天的紀錄，如果有(=已經大於0)，請撈出來
+    //if代表有存在的話,就要+1
+    if($View->math('count', '*' ,['date' => date("Y-m-d")]) > 0) { 
+    //$大寫的View表示資料表
+    //find(這邊複製上面的['date'=>date("Y-m-d")])
+    $view=$View->find(['date' => date("Y-m-d")]);
+    // $view['total'] += 1;
+    $view['total']++;
+    // +1之後就把東西存回去
+    $View->save($view);
+    //再建一個session，表示我已經有記錄這個狀態了
+    //這個人已經有session['view']了
+    //$view['total']複製上面的就好
+    $_SESSION['view']=$view['total'];
+    }else{
+    // 沒有存在的話
+    //會造成這個狀況的代表他是今天第一個來瀏覽的人，所以直接給他1
+    $View->save(['date'=>date("Y-m-d"),'total'=>1]);
+    $_SESSION['view'] = 1;
+}
+
+}
