@@ -18,7 +18,7 @@ class DB
 
     public function all(...$arg)
     {
-        $sql = " SELECT * FROM $this->table";
+        $sql = " SELECT * FROM $this->table ";
         switch (count($arg)) {
             case 1:
                 if (is_array($arg[0])) {
@@ -35,7 +35,7 @@ class DB
                 foreach ($arg[0] as $key => $value) {
                     $tmp = "`$key`='$value'";
                 }
-                $sql .= "WHERE" . implode("AND", $tmp) . " " . $arg[1];
+                $sql .= "WHERE" . implode(" AND ", $tmp) . " " . $arg[1];
                 break;
         }
 
@@ -102,9 +102,9 @@ class DB
             foreach ($id as $key => $value) {
                 $tmp[] = "`$key`='$value'";
             }
-            $sql .= implode("AND", $tmp);
+            $sql .= implode(" AND ", $tmp);
         } else {
-            $sql .= "`id`='$id'";
+            $sql .= " `id`='$id'";
         }
         return $this->pdo->exec($sql);
     }
@@ -114,7 +114,7 @@ class DB
     {
         //判斷資料陣列中是否有帶有 'id' 這個欄位，有則表示為既有資料的更新
         //沒有 'id' 這個欄位則表示為新增的資料
-        if(isset($array['id'])){
+        if (isset($array['id'])) {
             foreach ($array as $key => $value) {
                 $tmp[] = "`$key`='$value'";
             }
