@@ -21,8 +21,9 @@ $Que->save($opt);
 $Que->save($subject);
 
 // 根據題意,要回到題目的圖21,統計結果資料圖
+//不可以只有result
+// 我還要附上我的主題內容$subject['id']或是寫成$opt['parent']也可以
 to("../index.php?do=result&id=".$subject['id']);
-
 // 所以這邊會分兩個處理一個是選項的加總,一個是題目的加總
 // 比如說明天要做什麼? 有3個選項
 // 1.吃飯 2.唱歌 3.逛街  
