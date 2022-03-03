@@ -33,7 +33,7 @@ class DB
                 break;
             case 2:
                 foreach ($arg[0] as $key => $value) {
-                    $tmp = "`$key`='$value'";
+                    $tmp[] = "`$key`='$value'";
                 }
                 $sql .= " WHERE " . implode(" AND ", $tmp) . " " . $arg[1];
                 break;
