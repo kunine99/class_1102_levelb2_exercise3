@@ -22,7 +22,7 @@
 
 		<div id="mm">
 			<div class="hal" id="lef">
-				<a class="blo" href="?do=po">分類網誌</a>
+				<a class="blo" href="?do=index">回首頁</a>
 				<a class="blo" href="?do=news">最新文章</a>
 				<!-- <a class="blo" href="?do=pop">人氣文章</a> -->
 				<!-- <a class="blo" href="?do=know">講座訊息</a> -->
