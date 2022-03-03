@@ -24,8 +24,8 @@
 			<div class="hal" id="lef">
 				<a class="blo" href="?do=po">分類網誌</a>
 				<a class="blo" href="?do=news">最新文章</a>
-				<a class="blo" href="?do=pop">人氣文章</a>
-				<a class="blo" href="?do=know">講座訊息</a>
+				<!-- <a class="blo" href="?do=pop">人氣文章</a> -->
+				<!-- <a class="blo" href="?do=know">講座訊息</a> -->
 				<a class="blo" href="?do=que">問卷調查</a>
 			</div>
 			<div class="hal" id="main">
