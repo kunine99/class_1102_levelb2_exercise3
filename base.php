@@ -154,8 +154,8 @@ $View = new DB('view');
 
 
 // 先判斷在view資料表裡面有沒有(有沒有這件事我們都是用math來算)
-if(isset($_SESSION['view'])){
-    // 請去找有沒有今天的紀錄，如果有(=已經大於0)，請撈出來
+if(!isset($_SESSION['view'])){
+    //請去找有沒有今天的紀錄，如果有(=已經大於0)，請撈出來
     //if代表有存在的話,就要+1
     if($View->math('count', '*' ,['date' => date("Y-m-d")]) > 0) { 
     //$大寫的View表示資料表
